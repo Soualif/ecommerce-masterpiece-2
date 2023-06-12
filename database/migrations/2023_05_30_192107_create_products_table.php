@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('price');
             $table->text('description');
             $table->unsignedBigInteger('category_id')->index();
+            $table->string('image')->nullable();
+            $table->text('imagess')->nullable();
             $table->timestamps();
         });
     }
