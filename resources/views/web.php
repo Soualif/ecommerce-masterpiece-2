@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,17 @@ Route::get('/checkout/success', 'App\Http\Controllers\HomeController@success')->
 
 //Orders
 Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders');
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+//Authentification
+Auth::routes();
+
+Route::get('/logout', function() {
+    auth()->logout();
+    Session()->flush();
+
+    return Redirect::to('/');
+})->name('logout');
+

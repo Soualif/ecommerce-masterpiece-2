@@ -37,3 +37,10 @@ Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('order
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
