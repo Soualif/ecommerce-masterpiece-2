@@ -28,7 +28,10 @@ Route::get('/shop/{product}', 'App\Http\Controllers\ShopController@show')->name(
 
 
 //cart
-Route::get('/cart', 'App\Http\Controllers\HomeController@cart')->name('cart.index');
+Route::get('/cart', 'App\Http\Controllers\CartController@index')->name('cart.index');
+Route::post('/cart', 'App\Http\Controllers\CartController@store')->name('cart.store');
+Route::get('/cart/reset', 'App\Http\Controllers\CartController@reset')->name('cart.reset');
+
 
 //Checkout
 Route::get('/checkout', 'App\Http\Controllers\HomeController@checkout')->name('checkout.index');
@@ -36,6 +39,7 @@ Route::get('/checkout/success', 'App\Http\Controllers\HomeController@success')->
 
 //Orders
 Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders');
+
 
 
 Route::group(['prefix' => 'admin'], function () {
