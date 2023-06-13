@@ -36,14 +36,22 @@
 						</ul>
 
                         <ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item">
-                                <a class="nav-link" href="index.html">
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register')}}">
                                     <i class="fa-solid fa-user-plus"></i>
                                     Sign Up
                                 </a>
                             </li>
+                            <li class="nav-item submenu dropdown">
+                                <a class="nav-link" href="{{ route('login')}}">
+                                    <i class="fa-solid fa-sign-in-alt"></i>
+                                    Login
+                                </a>
+                            </li> 
+                        @else
 							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link "><i class="fa-solid fa-sign-in-alt"></i>Login</a>
+								<a href="{{ route('login') }}" class="nav-link "><i class="fa-solid fa-sign-in-alt"></i>Login</a>
 							</li>
 							<li class="nav-item">
                                  <a class="nav-link" href="{{ route('orders') }}">
@@ -52,11 +60,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="logout.html">
+                                <a class="nav-link" href="{{ route('logout') }}">
                                     <i class="fa-solid fa-sign-out-alt"></i>
                                     Logout
                                 </a>
                             </li>
+                        @endguest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cart.index') }}"> 
                                     <i class="fa-solid fa-shopping-cart"></i>
