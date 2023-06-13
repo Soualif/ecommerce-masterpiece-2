@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +42,11 @@ Route::group(['prefix' => 'admin'], function () {
 //Authentification
 Auth::routes();
 
-Route::get('/logout', function() {
+Route::get('/logout',  function() {
     auth()->logout();
     Session()->flush();
+
+    
 
     return Redirect::to('/');
 })->name('logout');

@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +43,12 @@ Route::group(['prefix' => 'admin'], function () {
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::get('/logout',  function() {
+    auth()->logout();
+    Session()->flush();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+
+    return Redirect::to('/');
+})->name('logout');
