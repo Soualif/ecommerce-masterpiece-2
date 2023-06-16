@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -31,15 +32,19 @@ Route::get('/shop/{product}', 'App\Http\Controllers\ShopController@show')->name(
 Route::get('/cart', 'App\Http\Controllers\CartController@index')->name('cart.index');
 Route::post('/cart', 'App\Http\Controllers\CartController@store')->name('cart.store');
 Route::get('/cart/reset', 'App\Http\Controllers\CartController@reset')->name('cart.reset');
+Route::delete('/cart/{product}', 'App\Http\Controllers\CartController@destroy')->name('cart.destroy');
+Route::post('/cart/{product}/save', 'App\Http\Controllers\CartController@save')->name('cart.save');
 
+//Save
+Route::delete('/save/{product}', 'App\Http\Controllers\SaveController@destroy')->name('save.destroy');
+Route::post('/save/{product}/cart', 'App\Http\Controllers\SaveController@store')->name('save.store');
 
 //Checkout
-Route::get('/checkout', 'App\Http\Controllers\HomeController@checkout')->name('checkout.index');
-Route::get('/checkout/success', 'App\Http\Controllers\HomeController@success')->name('checkout.success');
+Route::get('/checkout', 'App\Http\Controllers\CheckoutController@checkout')->name('checkout.index');
+Route::get('/checkout/success', 'App\Http\Controllers\CheckoutController@success')->name('checkout.success');
 
 //Orders
 Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders');
-
 
 
 Route::group(['prefix' => 'admin'], function () {

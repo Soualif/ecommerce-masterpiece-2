@@ -19,7 +19,7 @@ class CartController extends Controller
     {
         Cart::add($request->id, $request->name, 1,$request->price)->associate('App\Models\Product');
 
-        return redirect()->route('cart.index')->with('success', 'Product Added to your cart !');
+        return redirect()->route('cart.index')->with('success', 'Product Added to cart !');
     }
 
     /**
@@ -27,9 +27,18 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Cart::remove($id);
+        return back()->with('success', 'the product has been removed from cart !');
     }
     public function reset() {
         Cart::destroy();
+    }
+    public function save($id) {
+        $item = Cart::get($id);
+        Cart::remove($id);
+
+        Cart::instance('save')->add($item->id, $item->name, 1, $item->price)->associate('App\Models\Product');
+
+        return redirect()->route('cart.index')->with('success', 'Product saved for later !');
     }
 }

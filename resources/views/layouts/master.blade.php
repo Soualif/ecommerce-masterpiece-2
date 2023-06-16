@@ -19,6 +19,7 @@
 	<!--
 		CSS
 		============================================= -->
+	{{-- <link rel="stylesheet" href="{{ asset('css/checkout.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
@@ -30,12 +31,14 @@
 	<link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	@yield('includes')
 </head>
     <body>
          <div id="app">
 			@include('layouts.header')
             @yield('content')
 			@include('layouts.footer')
+			@yield('js')
          </div>
 	
 	<!--FontAwsome-->
