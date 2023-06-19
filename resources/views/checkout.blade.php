@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" action="#" id="payment-form">
+                    <form class="row contact_form" action="{{ route('checkout.store') }}" method="POST" id="payment-form">
                         {{ csrf_field() }}
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="firstname" name="name">
@@ -50,7 +50,7 @@
                             <span class="placeholder" data-placeholder="Phone number"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="compemailany">
+                            <input type="text" class="form-control" id="email" name="email">
                             <span class="placeholder" data-placeholder="Email Address"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
@@ -109,14 +109,14 @@
                         <h2>Your Order</h2>
                         <ul class="list">
                             <li><a href="#">Product <span>Total</span></a></li>
-                            <li><a href="#">Fresh Blackberry <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                            <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                            <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
+                            @foreach (Cart::content() as $product )
+                            <li><a href="#">{{ $product->name }}<span class="middle">x {{ $product->qty }}</span> <span class="last">CHF {{ $product->price }}</span></a></li>
+                            @endforeach
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span>$2160.00</span></a></li>
-                            <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                            <li><a href="#">Total <span>$2210.00</span></a></li>
+                            <li><a href="#">Subtotal <span>CHF {{ Cart::subtotal() }}</span></a></li>
+                            <li><a href="#">Tax <span>CHF {{ Cart::tax() }}</span></a></li>
+                            <li><a href="#">Total <span>CHF {{ Cart::total() }}</span></a></li>
                         </ul>
                         <div class="coupon my-3">
                             <div class="code">
@@ -208,7 +208,7 @@ function stripeTokenHandler (token) {
    hiddenInput.setAttribute('value', token.id);
    form.appendChild(hiddenInput);
    
-   //form.submit();
+   form.submit();
 }
 </script>
 

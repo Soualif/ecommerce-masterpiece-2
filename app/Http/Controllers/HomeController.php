@@ -27,6 +27,10 @@ class HomeController extends Controller
     public function orders() {
         return view('orders');
     }
+
+    public function contact() {
+        return view('contact');
+    }
     // public function checkout() {
     //     return view('checkout');
     // }
