@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+@section('includes')
+
+<script src="https://js.stripe.com/v3/"></script>
+
+@stop
+
 <head>
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +25,7 @@
 	<!--
 		CSS
 		============================================= -->
-	{{-- <link rel="stylesheet" href="{{ asset('css/checkout.css') }}"> --}}
+	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">

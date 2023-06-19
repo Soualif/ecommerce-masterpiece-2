@@ -10,6 +10,9 @@ class CheckoutController extends Controller
     public function checkout() {
         return view('checkout');
     }
+    Public function store(Request $request) {
+        //dd($request->all());
+    }
 
     //Success Payment
     public function success() {

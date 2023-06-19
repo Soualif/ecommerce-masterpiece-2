@@ -1,4 +1,11 @@
+
 @extends('layouts.master')
+
+@section('includes')
+
+<script src="https://js.stripe.com/v3/"></script>
+
+@stop
 
 @section('content')
 
@@ -26,12 +33,13 @@
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
                     <form class="row contact_form" action="#" id="payment-form">
+                        {{ csrf_field() }}
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="first" name="name">
+                            <input type="text" class="form-control" id="firstname" name="name">
                             <span class="placeholder" data-placeholder="First name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="last" name="name">
+                            <input type="text" class="form-control" id="lastname" name="name">
                             <span class="placeholder" data-placeholder="Last name"></span>
                         </div>
                         <div class="col-md-12 form-group">
@@ -80,17 +88,17 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
-                                <div id="link-authentication-element">
-                                    <!--Stripe.js injects the Link Authentication Element-->
-                                  </div>
-                                  <div id="payment-element">
-                                    <!--Stripe.js injects the Payment Element-->
-                                  </div>
-                                  <button id="submit">
-                                    <div class="spinner hidden" id="spinner"></div>
-                                    <span id="button-text">Pay now</span>
-                                  </button>
-                                  <div id="payment-message" class="hidden"></div>
+                              <div class="form-group">
+                                     <label for="card-element">
+                                       Credit or debit card
+                                     </label>
+                                     <div id="card-element">
+                                       <!-- A Stripe Element will be inserted here. -->
+                                     </div>
+     
+                                     <!-- Used to display form errors. -->
+                                     <div id="card-errors" role="alert"></div>
+                            </div>
                             </div>
                         </div>
                         <button id="complet-order" type="submit" class="primary-btn my-3">Proceed to payment</button>
@@ -134,137 +142,74 @@
 
 @section('js')
 
-
 <script>
 
 // This is your test publishable API key.
-const stripe = Stripe("pk_test_51NJR4EJDJaWDRCqlSKCIpbxNnh1ldT4wBpEKuH4TqJ1wxuk1gtvNeYwyCa4CEPRiscMb6eanRbBImSfFVcZsUETv00guFfzSYA");
+var stripe = Stripe("pk_test_51NJR4EJDJaWDRCqlSKCIpbxNnh1ldT4wBpEKuH4TqJ1wxuk1gtvNeYwyCa4CEPRiscMb6eanRbBImSfFVcZsUETv00guFfzSYA");
 
-// The items the customer wants to buy
-const items = [{ id: "xl-tshirt" }];
+var elements= stripe.elements();
 
-let elements;
+var style = {
+  base: {
+    color:'#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    icolor: '#fa755a'
+  }
+};
 
-initialize();
-checkStatus();
+var card = elements.create('card', {style: style});
 
-document
-  .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit);
+card.mount('#card-element');
 
-let emailAddress = '';
-// Fetches a payment intent and captures the client secret
-async function initialize() {
-  const response = await fetch("/create-payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  }else {
+    displayError.textContent = '';
+  }
+});
+
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event){
+  event.preventDefault();
+
+  var options = {
+    firstname: document.getElementById('firstname').value,
+    lastname: document.getElementById('lastname').value,
+    email: document.getElementById('email').value,
+  }
+
+  console.log(options)
+
+  stripe.createToken(card, options).then(function (result) {
+    if (result.error) {
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      stripeTokenHandler(result.token);
+    }
   });
-  const { clientSecret } = await response.json();
+});
 
-  const appearance = {
-    theme: 'stripe',
-  };
-  elements = stripe.elements({ appearance, clientSecret });
-
-  const linkAuthenticationElement = elements.create("linkAuthentication");
-  linkAuthenticationElement.mount("#link-authentication-element");
-
-  linkAuthenticationElement.on('change', (event) => {
-    emailAddress = event.value.email;
-  });
-
-  const paymentElementOptions = {
-    layout: "tabs",
-  };
-
-  const paymentElement = elements.create("payment", paymentElementOptions);
-  paymentElement.mount("#payment-element");
-}
-
-async function handleSubmit(e) {
-  e.preventDefault();
-  setLoading(true);
-
-  const { error } = await stripe.confirmPayment({
-    elements,
-    confirmParams: {
-      // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/checkout.html",
-      receipt_email: emailAddress,
-    },
-  });
-
-  // This point will only be reached if there is an immediate error when
-  // confirming the payment. Otherwise, your customer will be redirected to
-  // your `return_url`. For some payment methods like iDEAL, your customer will
-  // be redirected to an intermediate site first to authorize the payment, then
-  // redirected to the `return_url`.
-  if (error.type === "card_error" || error.type === "validation_error") {
-    showMessage(error.message);
-  } else {
-    showMessage("An unexpected error occurred.");
-  }
-
-  setLoading(false);
-}
-
-// Fetches the payment intent status after payment submission
-async function checkStatus() {
-  const clientSecret = new URLSearchParams(window.location.search).get(
-    "payment_intent_client_secret"
-  );
-
-  if (!clientSecret) {
-    return;
-  }
-
-  const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-  switch (paymentIntent.status) {
-    case "succeeded":
-      showMessage("Payment succeeded!");
-      break;
-    case "processing":
-      showMessage("Your payment is processing.");
-      break;
-    case "requires_payment_method":
-      showMessage("Your payment was not successful, please try again.");
-      break;
-    default:
-      showMessage("Something went wrong.");
-      break;
-  }
-}
-
-// ------- UI helpers -------
-
-function showMessage(messageText) {
-  const messageContainer = document.querySelector("#payment-message");
-
-  messageContainer.classList.remove("hidden");
-  messageContainer.textContent = messageText;
-
-  setTimeout(function () {
-    messageContainer.classList.add("hidden");
-    messageContainer.textContent = "";
-  }, 4000);
-}
-
-// Show a spinner on payment submission
-function setLoading(isLoading) {
-  if (isLoading) {
-    // Disable the button and show a spinner
-    document.querySelector("#submit").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
-  } else {
-    document.querySelector("#submit").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
-  }
+function stripeTokenHandler (token) {
+   var form = document.getElementById('payment-form');
+   var hiddenInput = document.createElement('input');
+   hiddenInput.setAttribute('type', 'hidden');
+   hiddenInput.setAttribute('name', 'stripeToken');
+   hiddenInput.setAttribute('value', token.id);
+   form.appendChild(hiddenInput);
+   
+   //form.submit();
 }
 </script>
-
 
 @stop
