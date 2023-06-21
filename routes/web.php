@@ -44,6 +44,10 @@ Route::get('/checkout', 'App\Http\Controllers\CheckoutController@checkout')->nam
 Route::post('/checkout', 'App\Http\Controllers\CheckoutController@store')->name('checkout.store');
 Route::get('/checkout/success', 'App\Http\Controllers\CheckoutController@success')->name('checkout.success');
 
+//Coupons
+Route::post('/coupon', 'App\Http\Controllers\CouponsController@store')->name('coupon.store');
+Route::delete('/coupon', 'App\Http\Controllers\CouponsController@destroy')->name('coupon.destroy');
+
 //Orders
 Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders');
 

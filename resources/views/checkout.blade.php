@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
-                              <div class="form-group">
+                                <div class="form-group">
                                      <label for="card-element">
                                        Credit or debit card
                                      </label>
@@ -98,7 +98,7 @@
      
                                      <!-- Used to display form errors. -->
                                      <div id="card-errors" role="alert"></div>
-                            </div>
+                                </div>
                             </div>
                         </div>
                         <button id="complet-order" type="submit" class="primary-btn my-3">Proceed to payment</button>
@@ -115,15 +115,29 @@
                         </ul>
                         <ul class="list list_2">
                             <li><a href="#">Subtotal <span>CHF {{ Cart::subtotal() }}</span></a></li>
+                            @if(session()->has('coupon'))
+                            <li><a href="#">Discount ({{ session()->get('coupon')['name'] }}) <span>- {{ session()->get('coupon')['discount'] }} CHF</span></a></li>
+                            <form action="{{ route('coupon.destroy')}}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            @endif
                             <li><a href="#">Tax <span>CHF {{ Cart::tax() }}</span></a></li>
-                            <li><a href="#">Total <span>CHF {{ Cart::total() }}</span></a></li>
+                            <li><a href="#">Total <span>CHF {{ session()->has('coupon')
+                            ? Cart::total() - session()->get('coupon')['discount']
+                            : Cart::total()
+                             }}</span></a></li>
                         </ul>
                         <div class="coupon my-3">
                             <div class="code">
                                 <p>have a code ?</p>
-                                <form action="#" method="post">
+                                <form action="{{ route('coupon.store') }}" method="post">
+                                    {{ csrf_field() }}
                                     <div class="d-flex align-items-center contact_form">
-                                        <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="Coupon code">
+                                        <input type="text" name="coupon" id="coupon" class="form-control" placeholder="Coupon code">
                                         <button class="primary-btn my-3" type="submit">
                                             <i class="fas fa-check"></i>
                                         </button>
@@ -131,8 +145,9 @@
                                 </form>
                             </div>
                         </div>
-                   </div>
-             </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

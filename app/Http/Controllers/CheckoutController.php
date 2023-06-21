@@ -20,7 +20,7 @@ class CheckoutController extends Controller
 
         try {
             $charge = \Stripe\Charge::create([
-                'amount' => Cart::total() * 100,
+                'amount' => session()->has('coupon') ? round(Cart::total() - session()->get('coupon')['discount'], 2) *100 : Cart::total() * 100,
                 'currency' => 'chf',
                 'description' => 'My Payment',
                 'source' => $request->stripeToken,
@@ -44,6 +44,8 @@ class CheckoutController extends Controller
         if(!session()->has('success')) {
             return redirect()->route('home');
         }
+        Cart::destroy();
+        session()->forget('coupon');
         return view('success');
     }
 }
