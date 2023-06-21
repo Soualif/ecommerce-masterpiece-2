@@ -28,7 +28,7 @@
                     <div class="single-prd-item">
                         <img class="img-fluid" src="{{ Voyager::image($product->image) }}" alt="">
                     </div>
-                    @foreach (json_decode($product->images, true) as $image )
+                    @foreach (json_decode($product->imagess, true) as $image )
                         <div class="single-prd-item">
                             <img class="img-fluid" src="{{ Voyager::image($image) }}" alt="">
                         </div>
