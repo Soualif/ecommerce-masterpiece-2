@@ -36,7 +36,7 @@
                     <h3>Sign Up</h3>
                     <form class="row login_form"  id="contactForm" novalidate="novalidate"
                     method="POST" action="{{ route('register') }}">
-                        @csrf
+                    {{ csrf_field() }}
 
                         {{-- Name --}}
                         <div class="col-md-12 form-group {{ $errors->has('name') ? 'has-error' : ''}}">
@@ -60,7 +60,7 @@
                         
                         {{-- Password --}}
                         <div class="col-md-12 form-group {{ $errors->has('password') ? 'has-error' : ''}}">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Your Password" value="{{ old('password') }}">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Your Password" value="">
                             @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -70,7 +70,7 @@
 
                         {{-- password-confirmation --}}
                         <div class="col-md-12 form-group {{ $errors->has('password-confirmation') ? 'has-error' : ''}}">
-                            <input type="password" class="form-control" id="password" name="password-confirmation" placeholder="Your Password" value="{{ old('password') }}">
+                            <input type="password" class="form-control" id="password" name="password-confirmation" placeholder="Your Password" value="">
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Sign Up</button>

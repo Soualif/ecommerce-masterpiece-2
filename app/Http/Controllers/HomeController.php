@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,37 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $products = Product::all();
+        $array=[];
+        //News
+        $news = Product::take(2)->get();
+
+        //Latest Products
+        $latestProducts = Product::orderBy('id', 'DESC')->take(8)->get();
+
+        //Best Sellers
+        $orders = OrderProduct::all()->groupBy('product_id');
+        foreach($orders as $order) {
+            foreach($order as $product) {
+                array_push($array, $product->product_id);
+            }
+        }
+        $bestsellers = Product::whereIn('id', $array)->take(8)->get();
+
         return view('home', [
-            'products' => $products
-        ]
-    );
+            'latestProducts' => $latestProducts,
+            'news' => $news,
+            'bestsellers' => $bestsellers
+        ]);
     }
     public function cart() {
         return view('cart');
     }
 
     public function orders() {
-        return view('orders');
+        $user =auth()->user();
+        return view('orders', [
+            'orders' => $user->orders
+        ]);
     }
 
     public function contact() {

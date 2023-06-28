@@ -49,7 +49,7 @@ Route::post('/coupon', 'App\Http\Controllers\CouponsController@store')->name('co
 Route::delete('/coupon', 'App\Http\Controllers\CouponsController@destroy')->name('coupon.destroy');
 
 //Orders
-Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders');
+Route::get('/orders', 'App\Http\Controllers\HomeController@orders')->name('orders')->middleware('auth');
 
 
 Route::group(['prefix' => 'admin'], function () {

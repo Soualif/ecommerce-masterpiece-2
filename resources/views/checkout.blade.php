@@ -35,18 +35,15 @@
                     <form class="row contact_form" action="{{ route('checkout.store') }}" method="POST" id="payment-form">
                         {{ csrf_field() }}
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="firstname" name="name">
+                            <input type="text" class="form-control" id="firstname" name="firstname">
                             <span class="placeholder" data-placeholder="First name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="lastname" name="name">
                             <span class="placeholder" data-placeholder="Last name"></span>
                         </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
-                        </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="number">
+                            <input type="text" class="form-control" id="number" name="phone">
                             <span class="placeholder" data-placeholder="Phone number"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
@@ -54,37 +51,15 @@
                             <span class="placeholder" data-placeholder="Email Address"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">Country</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add1" name="add1">
-                            <span class="placeholder" data-placeholder="Address line 01"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add2" name="add2">
+                            <input type="text" class="form-control" id="add2" name="address">
                             <span class="placeholder" data-placeholder="Address line 02"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
                             <input type="text" class="form-control" id="city" name="city">
                             <span class="placeholder" data-placeholder="Town/City"></span>
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">District</option>
-                                <option value="2">District</option>
-                                <option value="4">District</option>
-                            </select>
-                        </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <input type="checkbox" id="f-option2" name="selector">
-                            <label for="f-option2">Create an account ?</span>
+                            <input type="text" class="form-control" id="zip" name="postalcode" placeholder="Postcode/ZIP">
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
@@ -160,7 +135,7 @@
 <script>
 
 // This is your test publishable API key.
-var stripe = Stripe("pk_test_51NJR4EJDJaWDRCqlSKCIpbxNnh1ldT4wBpEKuH4TqJ1wxuk1gtvNeYwyCa4CEPRiscMb6eanRbBImSfFVcZsUETv00guFfzSYA");
+var stripe = Stripe("pk_test_51NJR4EJDJaWDRCqlp7pJKrSgwulk3TY85q7hHuUK8h7DbMg6UmR9NbFPl8ivZ4YJZ6XK6sUauKfr2FJ7IsnXjitA00qfrwyIq0");
 
 var elements= stripe.elements();
 

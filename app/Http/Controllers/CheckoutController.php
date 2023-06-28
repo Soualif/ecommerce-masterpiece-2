@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
@@ -31,6 +33,27 @@ class CheckoutController extends Controller
                 ]
             ]);
 
+            $order = Order::create([
+                'user_id' => auth()->user()->id,
+                'paiement_firstname' => $request->firstname,
+                'paiement_name' => $request->name,
+                'paiement_phone' => $request->phone,
+                'paiement_email' => $request->email,
+                'paiement_address' => $request->address,
+                'paiement_city' => $request->city,
+                'paiement_postalcode' => $request->postalcode,
+                'discount' => session()->get('coupon')['name'] ?? null,
+                'paiement_total' => session()->has('coupon') ? round(Cart::total() - session()->get('coupon')['discount'], 2) : Cart::total(),
+            ]);
+
+            foreach(Cart::content() as $product) {
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'quantity' => $product->qty
+                ]);
+            }
+
             return redirect()->route('checkout.success')->with('success', 'Payment has been Accepted !');
             
         }
@@ -44,8 +67,13 @@ class CheckoutController extends Controller
         if(!session()->has('success')) {
             return redirect()->route('home');
         }
+        $order = Order::latest()->first();
+        
         Cart::destroy();
         session()->forget('coupon');
-        return view('success');
+
+        return view('success', [
+            'order' => $order,
+        ]);
     }
 }
