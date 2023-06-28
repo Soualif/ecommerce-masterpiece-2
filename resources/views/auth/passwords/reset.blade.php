@@ -2,6 +2,8 @@
 
 @section('content')
 
+{{-- {{ Breadcrumbs::render('resetPassword') }} --}}
+
 
 <!--================Login Box Area =================-->
 <section class="login_box_area section_gap">

@@ -2,21 +2,8 @@
 
 @section('content')
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
-        <div class="container">
-            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-                <div class="col-first">
-                    <h1>Orders</h1>
-                    <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Orders</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Banner Area -->
+{{ Breadcrumbs::render('orders') }}
+
 
     <div class="container my-5">
         <div class="orders">
