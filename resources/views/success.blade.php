@@ -51,7 +51,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($order->$products as $product)
+							@foreach ($order->products as $product)
 							<tr>
 								<td>
 									<p>{{ $product->name }}</p>

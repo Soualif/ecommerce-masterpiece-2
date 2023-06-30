@@ -31,6 +31,7 @@
                 <div class="pagination">
 						<a href="http://127.0.0.1:8000/shop?category=handy&amp;page=1">1</a>
 						<a href="http://127.0.0.1:8000/shop?category=handy&amp;page=2">2</a>
+                        <a href="http://127.0.0.1:8000/shop?category=handy&amp;page=2">3</a>
                 </div>
             </div>
             <!-- End Filter Bar -->
