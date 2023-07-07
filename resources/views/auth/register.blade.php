@@ -47,19 +47,15 @@
                         {{-- Password --}}
                         <div class="col-md-12 form-group {{ $errors->has('password') ? 'has-error' : ''}}">
                             <input type="password" class="form-control" id="password" name="password" placeholder="Your Password" value="">
-                            @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                            @endif
                         </div>
 
                         {{-- password-confirmation --}}
                         <div class="col-md-12 form-group {{ $errors->has('password-confirmation') ? 'has-error' : ''}}">
-                            <input type="password" class="form-control" id="password" name="password-confirmation" placeholder="Your Password" value="">
+                            <input type="password" class="form-control" id="password-confirmation" name="password-confirmation" placeholder="Your Password" value="">
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Sign Up</button>
+                            <a href="{{ route('home') }}">
                         </div>
                     </form>
                 </div>
