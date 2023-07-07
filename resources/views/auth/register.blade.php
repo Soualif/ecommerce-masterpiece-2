@@ -51,7 +51,7 @@
 
                         {{-- password-confirmation --}}
                         <div class="col-md-12 form-group {{ $errors->has('password-confirmation') ? 'has-error' : ''}}">
-                            <input type="password" class="form-control" id="password-confirmation" name="password-confirmation" placeholder="Your Password" value="">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Your Password" value="">
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Sign Up</button>
