@@ -50,9 +50,7 @@
                                 </a>
                             </li> 
                         @else
-							<li class="nav-item submenu dropdown">
-								<a href="{{ route('login') }}" class="nav-link "><i class="fa-solid fa-sign-in-alt"></i>Login</a>
-							</li>
+							
 							<li class="nav-item">
                                  <a class="nav-link" href="{{ route('orders') }}">
                                     <i class="fa-solid fa-truck"></i>
