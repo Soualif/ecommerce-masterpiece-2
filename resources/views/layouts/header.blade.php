@@ -11,22 +11,30 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
+
+                    @if(false)
+                        <h1>test working</h1>                    
+                    @endif        
+
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav mr-auto ml-5">
-							<li class="nav-item active">
+							<li @if(Request::route()->getName() === "home") class="nav-item active" @else class="nav-item" @endif>
                                  <a class="nav-link" href="{{ route('home') }}"> 
                                     <i class="fa-solid fa-house"></i>
                                     Home
                                 </a>
                             </li>
-							<li class="nav-item submenu dropdown">
+							
+                            <li @if(Request::route()->getName() === "shop.index") class="nav-item submenu dropdown active" @else class="nav-item submenu dropdown" @endif>
+
 								 <a href="{{ route('shop.index') }}" class="nav-link"> 
                                  <i class="fa-solid fa-shopping-bag"></i>
                                  Shop
                                 </a> 
 							</li>
-							<li class="nav-item">
+                            <li @if(Request::route()->getName() === "contact") class="nav-item active" @else class="nav-item" @endif>
+
                                  <a class="nav-link" href="{{ route('contact') }}">
                                     <i class="fa-solid fa-envelope"></i>
                                     Contact
@@ -37,13 +45,13 @@
 
                         <ul class="nav navbar-nav menu_nav ml-auto">
                         @guest
-                            <li class="nav-item">
+                        <li @if(Request::route()->getName() === "register") class="nav-item active" @else class="nav-item" @endif>
                                 <a class="nav-link" href="{{ route('register')}}">
                                     <i class="fa-solid fa-user-plus"></i>
                                     Sign Up
                                 </a>
                             </li>
-                            <li class="nav-item submenu dropdown">
+                            <li @if(Request::route()->getName() === "login") class="nav-item submenu dropdown active" @else class="nav-item submenu dropdown" @endif>
                                 <a class="nav-link" href="{{ route('login')}}">
                                     <i class="fa-solid fa-sign-in-alt"></i>
                                     Login
@@ -51,20 +59,20 @@
                             </li> 
                         @else
 							
-							<li class="nav-item">
+                        <li @if(Request::route()->getName() === "orders") class="nav-item active" @else class="nav-item" @endif>
                                  <a class="nav-link" href="{{ route('orders') }}">
                                     <i class="fa-solid fa-truck"></i>
                                     Orders
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li @if(Request::route()->getName() === "logout") class="nav-item active" @else class="nav-item" @endif>
                                 <a class="nav-link" href="{{ route('logout') }}">
                                     <i class="fa-solid fa-sign-out-alt"></i>
                                     Logout
                                 </a>
                             </li>
                         @endguest
-                            <li class="nav-item">
+                        <li @if(Request::route()->getName() === "cart.index") class="nav-item active" @else class="nav-item" @endif>
                                 <a class="nav-link" href="{{ route('cart.index') }}"> 
                                     <i class="fa-solid fa-shopping-cart"></i>
                                     Cart

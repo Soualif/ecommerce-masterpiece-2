@@ -38,12 +38,13 @@
 	<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	@yield('includes')
+	
 </head>
     <body>
          <div id="app">
 			@include('layouts.header')
             @yield('content')
-			@include('layouts.footer')
+		
 			@yield('js')
          </div>
 	

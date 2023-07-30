@@ -29,8 +29,13 @@
                     <a class="btn" href="{{ route('shop.index', ['category' => request()->category, 'sort' => 'desc']) }}">Decreasing price</a>
                 </div>
                 <div class="pagination">
-						<a href="http://127.0.0.1:8000/shop?category=handy&amp;page=1">1</a>
-						<a href="http://127.0.0.1:8000/shop?category=handy&amp;page=2">2</a>
+                @php
+                    $page = request()->query('page');
+                @endphp
+                    <a @if($page === "1") class="active" @endif href="http://127.0.0.1:8000/shop?category=handy&amp;page=1">1</a>
+                    <a @if($page === "2") class="active" @endif href="http://127.0.0.1:8000/shop?category=handy&amp;page=2">2</a>
+                    
+               				
                 </div>
             </div>
             <!-- End Filter Bar -->
@@ -68,9 +73,24 @@
 						<a href="http://127.0.0.1:8000/shop?category=handy&amp;page=2">2</a>
                 </div>
             </div>
+            
             <!-- End Filter Bar -->
         </div>
     </div>
+    
+
 </div>
 
+                
+<section class="footer-shop">
+@include('layouts.footer')
+</section>
+
+</section>
+
 @stop
+<section>
+
+</section>
+
+
