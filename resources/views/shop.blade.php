@@ -82,15 +82,9 @@
 </div>
 
                 
-<section class="footer-shop">
-@include('layouts.footer')
-</section>
+
 
 </section>
 
 @stop
-<section>
-
-</section>
-
 
