@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('content')
+
 
 {{ Breadcrumbs::render('cart') }}
 
@@ -154,8 +154,7 @@
             @endif
         </div>
     </div>
-</section>
+    
 <!--================End Cart Area =================-->
 
 
-@stop

@@ -55,7 +55,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Sign Up</button>
-                            <a href="{{ route('home') }}">
+                            <a href="{{ route('home') }}"></a>
                         </div>
                     </form>
                 </div>

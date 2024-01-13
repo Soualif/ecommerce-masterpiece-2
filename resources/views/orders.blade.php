@@ -44,4 +44,7 @@
             @endforeach
         </div>
     </div>
+    <section class="footer-shop">
+    
+</section>
 @stop
